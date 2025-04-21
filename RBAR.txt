@@ -1,0 +1,8 @@
+1.3 Faça uma pesquisa sobre o anti-pattern chamado RBAR - Row By Agonizing Row.
+Explique com suas palavras do que se trata.
+R: RBAR é uma consequência de quando se programa estritamente de forma procedural, ou seja, cada código ser feito em forma de 
+um passo a passo para o computador. Isso em uma abordagem orientada a conjuntos, seria feito somente através da especificação 
+do que se busca, ao invés de especificar o passo a passo de como encontrar. Essa abordagem, é muito comum de ser feita por 
+programadores sem muita experiência em grandes bancos e, apesar de não ser por si uma indicação de codificação ruim, traz vários 
+problemas conforme o crescimento do banco de dados. Como, por exemplo, uma lentidão nos processos, que conforme o passar do tempo, 
+vai se tornando cada vez maior.
