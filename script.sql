@@ -1,0 +1,72 @@
+-- 1.1 Escreva um cursor que exiba as variáveis rank e youtuber de toda tupla que tiver
+-- video_count pelo menos igual a 1000 e cuja category seja igual a Sports ou Music.
+
+-- DO $$
+-- DECLARE
+-- 	cur_rank_youtuber CURSOR FOR SELECT rank, youtuber FROM tb_top_youtubers WHERE video_count >= 1000
+-- 	AND category IN ('Sports', 'Music');
+-- 	v_rank INT;
+-- 	v_youtuber VARCHAR(200);
+-- 	tupla RECORD;
+-- 	resultado TEXT DEFAULT '';
+-- BEGIN
+-- 	OPEN cur_rank_youtuber;
+-- 		FETCH cur_rank_youtuber INTO tupla;
+-- 		WHILE FOUND LOOP
+-- 			resultado := resultado || 'Rank: ' || tupla.rank || ',' || 'Youtuber: ' ||tupla.youtuber || '; ';
+-- 			FETCH cur_rank_youtuber INTO tupla;
+-- 			EXIT WHEN NOT FOUND;
+-- 		END LOOP;
+-- 	CLOSE cur_rank_youtuber;
+-- 	RAISE NOTICE '%', resultado;
+-- END;
+-- $$
+
+-- -- Outra forma de realizar a atividade:
+-- DO $$
+-- DECLARE
+-- 	cur_rank_youtuber CURSOR FOR SELECT rank, youtuber FROM tb_top_youtubers WHERE video_count >= 1000
+-- 	AND category IN ('Sports', 'Music');
+-- 	v_rank INT;
+-- 	v_youtuber VARCHAR(200);
+-- BEGIN
+-- 	OPEN cur_rank_youtuber;
+-- 		LOOP
+-- 			FETCH cur_rank_youtuber INTO v_rank, v_youtuber;
+-- 			EXIT WHEN NOT FOUND;
+-- 			RAISE NOTICE 'Rank: %, Youtuber: %', v_rank, v_youtuber;
+-- 		END LOOP;
+-- 	CLOSE cur_rank_youtuber;
+-- END;
+-- $$
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+-- 1.2 Escreva um cursor que exibe todos os nomes dos youtubers em ordem reversa. Para tal
+-- O SELECT deverá ordenar em ordem não reversa
+-- O Cursor deverá ser movido para a última tupla
+-- Os dados deverão ser exibidos de baixo para cima
+
+-- DO $$
+-- DECLARE
+-- cur_nome_youtubers REFCURSOR;
+-- tupla RECORD;
+-- BEGIN
+-- -- scroll para pegar a ultima linha do cursor
+-- 	OPEN cur_nome_youtubers SCROLL FOR
+-- 	SELECT youtuber
+-- 	FROM tb_top_youtubers
+-- 	ORDER BY youtuber;
+-- 	FETCH LAST FROM cur_nome_youtubers INTO tupla;
+-- -- loop para exibir item a item, de baixo para cima
+-- 		LOOP
+-- 			FETCH PRIOR FROM cur_nome_youtubers INTO tupla;
+-- 			EXIT WHEN NOT FOUND;
+-- 			RAISE NOTICE '%', tupla;
+-- 		END LOOP;
+-- 	CLOSE cur_nome_youtubers;
+-- END;
+-- $$
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
